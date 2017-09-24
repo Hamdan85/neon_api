@@ -12,5 +12,6 @@ require "neon_api"
 
 require "irb"
 require "pry"
-#IRB.start(__FILE__)
-Pry.start
+require "dotenv/load"
+IRB.start(__FILE__)
+#Pry.start
