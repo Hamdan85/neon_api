@@ -1,8 +1,6 @@
 # NeonApi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/neon_api`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Gem used to integrate any rails system to Bank NeonApi
 
 ## Installation
 
@@ -14,7 +12,7 @@ gem 'neon_api'
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
@@ -22,17 +20,57 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Initialize the system on its own initializer file:
+
+config/initializer/neon_api.rb
+```ruby
+NeonApi.configure do |config|
+  config.token = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
+  config.username = 'user@name.com'
+  config.password = 'password'
+  config.encrypt_pem = 'public_encrypt.pem' #your encryption pem 
+  config.decrypt_pem = 'public_decrypt.pem' #your decryption pem
+  config.environment = :development         #environment :development of :production
+end
+```
+
+Use the bank methods in order to create or manage your transactions:
+
+Get Balance:
+```ruby
+NeonApi::Balance.get_balance
+```
+
+Create Payer:
+```ruby
+NeonApi::CreatePayer.create(bank_acc_id, name, cpf, email, address, number, complement, zipcode, city, state, country)
+```
+
+CancelPayment:
+```ruby
+NeonApi::CancelPayment.create(list_uniq_id)
+```
+
+ConfirmPayment
+```ruby
+NeonApi::ConfirmPayment.create(list_uniq_id)
+```
+
+Generate Payment Slip
+```ruby
+GeneratePaymentSlipToPayer.create(bank_acc_id, name, cpf, email, address, number, complement, zipcode, city, state, country)
+```
+More methods (and their arguments) can be found on methods folder
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+I made this for myself, in a hurry. It works but it's not tested or well documented. Sorry for that.
 
 ## Contributing
+BUUUUUT... You can help!!!!
+Help me to test and document it. It's good for everybody. (please rspec)
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/neon_api. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Hamdan85/neon_api. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
