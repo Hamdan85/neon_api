@@ -11,6 +11,8 @@
 # rspec failure tracking
 .rspec_status
 
-.idea/*
+
 /.env
-/.idea/workspace.xml
+.idea
+/public_decrypt.pem
+/public_encrypt.pem
