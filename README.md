@@ -1,3 +1,6 @@
+[![Gem Version](https://badge.fury.io/rb/neon_api.svg)](https://badge.fury.io/rb/neon_api)
+
+
 # NeonApi
 
 Gem used to integrate any rails system to Bank NeonApi
