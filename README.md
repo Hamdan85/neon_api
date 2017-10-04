@@ -37,6 +37,9 @@ NeonApi.configure do |config|
 end
 ```
 
+PS: YOU WILL NEED TO CHANGE YOUR KEYS FROM XML TO PEM!!! THIS IS IMPORTANT!
+you can use this(https://superdry.apphb.com/tools/online-rsa-key-converter) for this purpose.
+
 Use the bank methods in order to create or manage your transactions:
 
 Get Balance:
