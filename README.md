@@ -31,8 +31,8 @@ NeonApi.configure do |config|
   config.token = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
   config.username = 'user@name.com'
   config.password = 'password'
-  config.encrypt_pem = 'public_encrypt.pem' #your encryption pem 
-  config.decrypt_pem = 'public_decrypt.pem' #your decryption pem
+  config.encrypt_pem = 'public_encrypt.pem' #path to your encryption pem 
+  config.decrypt_pem = 'public_decrypt.pem' #path to your decryption pem
   config.environment = :development         #environment :development of :production
 end
 ```
