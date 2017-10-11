@@ -15,10 +15,10 @@ module NeonApi
 
   # Configuration
   class Configuration
-    attr_accessor :environment, :token, :client, :username, :password, :encrypt_pem, :decrypt_pem
+    attr_accessor :environment, :token, :client, :username, :password, :encrypt_pem, :decrypt_pem, :proxy
 
     def client_setup
-      @client ||= Client.new(environment, token, username, password, encrypt_pem, decrypt_pem)
+      @client ||= Client.new(environment, token, username, password, encrypt_pem, decrypt_pem, proxy)
       @client.authenticate
     end
   end

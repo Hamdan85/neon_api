@@ -8,7 +8,7 @@ module NeonApi
   class Client
     attr_accessor :url, :environment, :payload, :token, :last_authenticated_at, :response,
                   :auth_token, :aes_key, :aes_iv, :expire_time, :client_id, :bank_account, :response
-    def initialize(environment = :development, token, login, password, encrypt_pem, decrypt_pem)
+    def initialize(environment = :development, token, login, password, encrypt_pem, decrypt_pem, proxy)
       @base_url = if production?
                     'https://apiparceiros.banconeon.com.br/ '
                   else
@@ -21,6 +21,9 @@ module NeonApi
       @password     = password
       @encrypt_pem  = encrypt_pem
       @decrypt_pem  = decrypt_pem
+      @proxy        = proxy
+
+      RestClient.proxy = @proxy if @proxy
     end
 
     def authenticate
