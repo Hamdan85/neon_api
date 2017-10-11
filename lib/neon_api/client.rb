@@ -10,6 +10,7 @@ module NeonApi
                   :auth_token, :aes_key, :aes_iv, :expire_time, :client_id, :bank_account, :response
     def initialize(environment = :development, token, login, password, encrypt_pem, decrypt_pem)
       @base_url = if production?
+                    'https://apiparceiros.banconeon.com.br/ '
                   else
                     'https://servicosdev.neonhomol.com.br/servicopj/'
                   end
