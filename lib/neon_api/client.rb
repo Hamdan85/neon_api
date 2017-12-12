@@ -7,14 +7,9 @@ module NeonApi
 
   class Client
     attr_accessor :url, :environment, :payload, :token, :last_authenticated_at, :response,
-                  :auth_token, :aes_key, :aes_iv, :expire_time, :client_id, :bank_account, :response
-    def initialize(environment = :development, token, login, password, encrypt_pem, decrypt_pem, proxy)
-      @base_url = if production?
-                    'https://apiparceiros.banconeon.com.br/ '
-                  else
-                    'https://servicosdev.neonhomol.com.br/servicopj/'
-                  end
+                  :auth_token, :aes_key, :aes_iv, :expire_time, :client_id, :bank_account, :response, :base_url
 
+    def initialize(environment, token, login, password, encrypt_pem, decrypt_pem, proxy)
       @environment  = environment
       @token        = token
       @username     = login
@@ -30,7 +25,7 @@ module NeonApi
       @last_authenticated_at = Time.now
 
       request = begin
-        RestClient::Request.execute(method: :post, url: "#{@base_url}/V1/Client/Authentication",
+        RestClient::Request.execute(method: :post, url: "#{base_url}/V1/Client/Authentication",
                                     payload: { "Data": encrypted_payload(authentication: true) }, headers: auth_headers)
       rescue RestClient::ExceptionWithResponse => err
         err.response
@@ -48,7 +43,7 @@ module NeonApi
       authenticate if expire_time > Time.now
 
       request = begin
-        RestClient::Request.execute(method: :post, url: @base_url + url,
+        RestClient::Request.execute(method: :post, url: base_url + url,
                                     payload: { "Data": encrypted_payload(payload: object) }, headers: headers)
       rescue RestClient::ExceptionWithResponse => err
         err.response
@@ -122,6 +117,10 @@ module NeonApi
           "Password": @password,
           "RequestDate": Time.now.strftime('%Y-%m-%dT%H:%M:%S')
       }.to_json
+    end
+
+    def base_url
+      @base_url ||= production? ? 'https://apiparceiros.banconeon.com.br/' : 'https://servicosdev.neonhomol.com.br/servicopj/'
     end
   end
 end
