@@ -17,6 +17,7 @@ module NeonApi
       @encrypt_pem  = encrypt_pem
       @decrypt_pem  = decrypt_pem
       @proxy        = proxy
+      @expire_time  = Time.now
 
       RestClient.proxy = @proxy if @proxy
     end
@@ -40,7 +41,7 @@ module NeonApi
 
     def send_request(object, url)
 
-      authenticate if expire_time > Time.now
+      authenticate if Time.now > expire_time
 
       request = begin
         RestClient::Request.execute(method: :post, url: base_url + url,

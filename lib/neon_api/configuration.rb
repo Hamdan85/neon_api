@@ -19,7 +19,6 @@ module NeonApi
 
     def client_setup
       @client ||= Client.new(environment, token, username, password, encrypt_pem, decrypt_pem, proxy)
-      @client.authenticate
     end
   end
 end
