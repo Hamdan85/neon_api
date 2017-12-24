@@ -9,6 +9,8 @@ module NeonApi
     attr_accessor :url, :environment, :payload, :token, :last_authenticated_at, :response,
                   :auth_token, :aes_key, :aes_iv, :expire_time, :client_id, :bank_account, :response, :base_url
 
+    attr_reader :time_klass
+
     def initialize(environment, token, login, password, encrypt_pem, decrypt_pem, proxy)
       @environment  = environment
       @token        = token
@@ -17,12 +19,14 @@ module NeonApi
       @encrypt_pem  = encrypt_pem
       @decrypt_pem  = decrypt_pem
       @proxy        = proxy
+      @time_klass   = Time.respond_to?(:zone) ? Time.zone : Time
+      @expire_time  = time_klass.now
 
       RestClient.proxy = @proxy if @proxy
     end
 
     def authenticate
-      @last_authenticated_at = Time.now
+      @last_authenticated_at = time_klass.now
 
       request = begin
         RestClient::Request.execute(method: :post, url: "#{base_url}/V1/Client/Authentication",
@@ -40,7 +44,7 @@ module NeonApi
 
     def send_request(object, url)
 
-      authenticate if expire_time > Time.now
+      authenticate if time_klass.now > expire_time
 
       request = begin
         RestClient::Request.execute(method: :post, url: base_url + url,
@@ -82,7 +86,7 @@ module NeonApi
       @auth_token = auth_answer['DataReturn']['Token']
       @aes_key = auth_answer['DataReturn']['AESKey']
       @aes_iv = auth_answer['DataReturn']['AESIV']
-      @expire_time = Time.at(auth_answer['DataReturn']['DataExpiracao'].gsub(/[^\d]/, '').to_i)
+      @expire_time = time_klass.at(auth_answer['DataReturn']['DataExpiracao'].gsub(/[^\d]/, '').to_i)
       @client_id = auth_answer['DataReturn']['ClientId']
       @bank_account = auth_answer['DataReturn']['BankAccountId']
     end
@@ -115,7 +119,7 @@ module NeonApi
       {
           "Username": @username,
           "Password": @password,
-          "RequestDate": Time.now.strftime('%Y-%m-%dT%H:%M:%S')
+          "RequestDate": time_klass.now.strftime('%Y-%m-%dT%H:%M:%S')
       }.to_json
     end
 
