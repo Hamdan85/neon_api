@@ -20,7 +20,7 @@ module NeonApi
       @decrypt_pem  = decrypt_pem
       @proxy        = proxy
       @time_klass   = Time.respond_to?(:zone) ? Time.zone : Time
-      @expire_time  = time_klass.now
+      @expire_time  = time_klass.now - 3600 # initialize in an expired condition to force first authentication
 
       RestClient.proxy = @proxy if @proxy
     end
@@ -83,6 +83,7 @@ module NeonApi
     end
 
     def update_auth(auth_answer)
+      @data_return = auth_answer['DataReturn']
       @auth_token = auth_answer['DataReturn']['Token']
       @aes_key = auth_answer['DataReturn']['AESKey']
       @aes_iv = auth_answer['DataReturn']['AESIV']
