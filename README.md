@@ -34,7 +34,7 @@ NeonApi.configure do |config|
   config.proxy        = 'http://dasd:asd@asd.asd.com:80'      # neon needs a fixed outbound ip
   config.encrypt_pem  = 'public_encrypt.pem'                  # path to your encryption pem 
   config.decrypt_pem  = 'public_decrypt.pem'                  # path to your decryption pem
-  config.environment  = :development                          # environment :development of :production
+  config.environment  = :development                          # environment :development or :production
 end
 ```
 
