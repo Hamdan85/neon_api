@@ -125,7 +125,7 @@ module NeonApi
     end
 
     def base_url
-      @base_url ||= production? ? 'https://apiparceiros.banconeon.com.br/' : 'https://servicosdev.neonhomol.com.br/servicopj/'
+      @base_url ||= production? ? 'https://api.banconeon.com.br/' : 'https://servicosdev.neonhomol.com.br/servicopj/'
     end
   end
 end
