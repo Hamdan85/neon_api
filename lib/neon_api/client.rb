@@ -99,7 +99,7 @@ module NeonApi
 
     # client_id is dependent on the expiration time, so force new authentication if expired
     def client_id
-      authenticate if expired?
+      authenticate if expired? || @client_id.nil?
       @client_id
     end
 
